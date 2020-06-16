@@ -2,12 +2,12 @@
 
 ## 1. Login to the bastion server
 
-Using your terminal emulator such as WSL, putty or ConEmu, login to the server
+Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
 
-## 2. Make sure you have the .kube/config to connect to the Kuberentes API server
+## 2. Make sure you have the .kube/config file to connect to the Kuberentes API server
 
 ```
-$ ls -l .kube/config
+$ ls -l $HOME/.kube/config
 ```
 
 ## 3. Try kubectl; the CLI tool for Kuberetes
@@ -22,7 +22,7 @@ ip-192-168-9-90.ap-northeast-1.compute.internal    Ready    <none>   55m   v1.16
 ip-192-168-90-1.ap-northeast-1.compute.internal    Ready    <none>   55m   v1.16.8-eks-e16311
 ```
 
-## 4. Let's deploy a simple nginx pod with a Cloud Load Balancer
+## 4. Let's deploy a simple nginx application with a Cloud Load Balancer
 
 Clone the hands-on repository on your bastion and run `kubectl apply`!
 
@@ -32,7 +32,7 @@ $ cd simple-k8s
 $ kubectl apply -f app.yaml
 ```
 
-Let's see your application has been deployed
+Let's see your application has been deployed.
 
 ```
 $ kubectl get pod
@@ -42,7 +42,7 @@ nginx-deployment-59bbf75fb-j8jzv   1/1     Running   0          24s
 nginx-deployment-59bbf75fb-x6d5n   1/1     Running   0          24s
 ```
 
-and then, a cloud load balancer has been deployed for your application
+and then, a cloud load balancer has been deployed for your application.
 
 ```
 $ kubectl get service
@@ -59,7 +59,7 @@ Note that it can take some time to get the Cloud Load Balancer available.
 
 Once you confirm your application is wokring, let's delete all the resources you've created on your cluster.
 
-Run the following command
+Run the following command.
 
 ```
 $ kubectl delete -f app.yaml
