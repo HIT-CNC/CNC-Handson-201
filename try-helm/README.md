@@ -129,4 +129,4 @@ Go back to Data Sources tab and you can see Prometheus has been added as a data 
 
 ![](img/explore.png)
 
-Now, go to `Explorer`, then you can see the types of metrics that Prometheus exports to Grafana.
+Now, go to `Explore`, then you can see the types of metrics that Prometheus exports to Grafana.
