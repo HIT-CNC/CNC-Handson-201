@@ -48,7 +48,16 @@ This resource will control whatever you'd need to create mattermost components a
 
 ### 3. Deploy a mattermost cluster
 
-Create a YAML file and apply it to your Kubernetes.
+Execute the following the command and copy the `EXTERNAL-IP` of ingress-nginx-controller.
+
+```shell
+$ kubectl get svc -n ingress-nginx
+NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP                                                                          PORT(S)                      AGE
+ingress-nginx-controller             LoadBalancer   10.100.208.196   ab47036fd4cb74ef9b8884482ec2ab2d-904289beb63d5ab3.elb.ap-northeast-1.amazonaws.com   80:30528/TCP,443:30392/TCP   17m
+```
+
+Create a YAML file and apply it to your Kubernetes. Make sure you overrode the placeholder in `ingressName` with the above information.
+
 
 ```yaml
 apiVersion: mattermost.com/v1alpha1
@@ -57,7 +66,7 @@ metadata:
   name: mm-example-full
 spec:
   size: 5000users
-  ingressName: example.mattermost-example.com
+  ingressName: <YOUR-LOADBALANCER-FQDN> #Override with the EXTERNAL-IP
   ingressAnnotations:
     kubernetes.io/ingress.class: nginx
   version: 5.14.0
