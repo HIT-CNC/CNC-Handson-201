@@ -26,7 +26,6 @@ Setup helm and the necessary namepsaces
 
 ```shell
 $ kubectl create namespace monitoring
-$ helm init
 ```
 
 Fist, setup InfluxDB
@@ -121,7 +120,7 @@ $ kubectl apply -f influx-deployment.yaml
 Expose InfluxDB service so that other Pods(containers) in your cluster can access to InfluxDB
 
 ```shell
-$ kubectl expose deployment influxdb --port=8086 --target-port=8086 --protocol=TCP --type=ClusterIP
+$ kubectl expose deployment influxdb --port=8086 --target-port=8086 --protocol=TCP --type=ClusterIP -n monitoring
 ```
 
 ## 3. Setup Telegraf as metrics collector.
@@ -141,7 +140,9 @@ stringData:
   INFLUXDB_USER: root
   INFLUXDB_USER_PASSWORD: root1234
 EOF
+```
 
+```shell
 $ cat <<EOF > telegraf-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -154,7 +155,6 @@ data:
       database = "$INFLUXDB_DB"
       username = "$INFLUXDB_USER"
       password = "$INFLUXDB_USER_PASSWORD"
-# Statsd Server
     [[inputs.statsd]]
       max_tcp_connections = 250
       tcp_keep_alive = false
@@ -217,7 +217,7 @@ $ kubectl apply -f telegraf-deployment.yaml
 Expose Telegraf service so that other Pods(containers) in your cluster can access to it.
 
 ```shell
-$ kubectl expose deployment telegraf --port=8125 --target-port=8125 --protocol=UDP --type=NodePort
+$ kubectl expose deployment telegraf --port=8125 --target-port=8125 --protocol=UDP --type=NodePort -n monitoring
 ```
 
 ## 4. Setup Grafana
@@ -283,7 +283,21 @@ EOF
 Now, install Prometheus!
 
 ```shell
-$ helm install stable/prometheus --generate-name
+$ helm install stable/prometheus --generate-name --set server.service.type=LoadBalancer,forceNamespace=monitoring
 ```
 
-access to `http://prometheus-server:80` on your browser. You now see the Prometheus Web UI.
+Prometheus has been installed with a cloud load balancer in the monitoring namespace. We need the service URL to access to the prometheus server.
+
+```shell
+$ kubectl get service -n monitoring
+kg svc -n monitoring
+NAME                                  TYPE           CLUSTER-IP       EXTERNAL-IP                                                                   PORT(S)          AGE
+influxdb                              ClusterIP      10.100.181.214   <none>                                                                        8086/TCP         8m23s
+prometheus-1594089419-alertmanager    ClusterIP      10.100.30.37     <none>                                                                        80/TCP           9s
+prometheus-1594089419-node-exporter   ClusterIP      None             <none>                                                                        9100/TCP         9s
+prometheus-1594089419-pushgateway     ClusterIP      10.100.55.192    <none>                                                                        9091/TCP         9s
+prometheus-1594089419-server          LoadBalancer   10.100.80.228    af80d2e07796c41648a251ed698e9f41-790881073.ap-northeast-1.elb.amazonaws.com   80:31864/TCP     9s
+telegraf                              NodePort       10.100.251.177   <none>                                                                        8125:30159/UDP   5m17s
+```
+
+Prometheus server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser. You now see the Prometheus Web UI!
