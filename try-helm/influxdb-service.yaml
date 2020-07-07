@@ -7,7 +7,9 @@ metadata:
     app: influxdb
 spec:
   ports:
-    - port: 3306
+  - port: 8086
+    protocol: TCP
+    targetPort: 8086
   selector:
     app: influxdb
-  clusterIP: None
+  type: ClusterIP

@@ -58,7 +58,7 @@ Telegraf is an open source software that gives functionality of processing and a
 
 
 ```shell
-$ kubectl create secret generic influxdb-creds \
+$ kubectl create secret generic telegraf-creds \
   --from-literal=INFLUXDB_DB=local_monitoring \
   --from-literal=INFLUXDB_URL=http://influxdb:8086 \
   --from-literal=INFLUXDB_USER=root \
@@ -85,6 +85,7 @@ $ kubectl create secret generic grafana-creds \
 Apply Grafana deployment.
 
 ```shell
+$ kubectl apply -f grafana-pvc.yaml
 $ kubectl apply -f grafana-deployment.yaml
 $ kubectl apply -f grafana-service.yaml
 ```
@@ -117,4 +118,6 @@ Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your
 **Note that it takes several minutes to provison the AWS LoadBalancer**
 
 ## 8. Setup Grafana
+
+Access grafana with the loadbalancer FQDN.
 

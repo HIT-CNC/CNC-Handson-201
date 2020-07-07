@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
+  namespace: monitoring
+  name: telegraf
   labels:
     app: telegraf
-  name: telegraf
 spec:
   selector:
     matchLabels:
@@ -15,6 +16,9 @@ spec:
     spec:
       containers:
         - name: telegraf
+          envFrom:
+          - secretRef:
+              name: telegraf-creds
           image: telegraf
           volumeMounts:
             - mountPath: /etc/telegraf

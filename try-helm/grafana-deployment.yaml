@@ -9,13 +9,13 @@ spec:
   selector:
     matchLabels:
       app: grafana
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
         app: grafana
     spec:
+      securityContext:
+        fsGroup: 472
       containers:
       - envFrom:
         - secretRef:
@@ -25,3 +25,10 @@ spec:
         ports:
         - containerPort: 3000
           name: http
+        volumeMounts:
+          - name: grafana-storage
+            mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-storage

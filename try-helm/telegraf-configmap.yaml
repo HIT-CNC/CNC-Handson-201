@@ -21,5 +21,4 @@ data:
       metric_separator = "."
       allowed_pending_messages = 10000
       percentile_limit = 1000
-      parse_data_dog_tags = true
       read_buffer_size = 65535

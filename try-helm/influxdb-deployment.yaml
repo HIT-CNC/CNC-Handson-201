@@ -9,8 +9,6 @@ spec:
   selector:
     matchLabels:
       app: influxdb
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
