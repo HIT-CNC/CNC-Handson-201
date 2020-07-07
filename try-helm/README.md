@@ -4,7 +4,19 @@
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
 
-## 2. Let's try to install Prometheus and Grafana using Helm chart!
+## 2. Install Helm
+
+Install Helm package on your SSH host.
+
+```shell
+$ curl https://helm.baltorepo.com/organization/signing.asc | sudo apt-key add -
+$ sudo apt-get install apt-transport-https --yes
+$ echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+$ sudo apt-get update
+$ sudo apt-get install helm
+```
+
+## 3. Let's try to install Prometheus and Grafana using Helm chart!
 
 As explained in the hands-on session, Helm is a package manager for Kubernetes. It hides a lot of "unnecessary part" of Kubernetes so that infra operators can easily provison that they need. But you need to be aware that it does not mean you don't have to learn about what you're installing in your kUbernetes.
 
