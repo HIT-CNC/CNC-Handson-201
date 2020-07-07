@@ -91,7 +91,7 @@ spec:
       - envFrom:
         - secretRef:
             name: influxdb-creds
-        image: docker.io/influxdb:1.6.4
+        image: docker.io/influxdb:1.8.0
         imagePullPolicy: IfNotPresent
         name: influxdb
         resources: {}
@@ -193,7 +193,7 @@ spec:
         app: telegraf
     spec:
       containers:
-        - image: telegraf:1.10.0
+        - image: telegraf:1.14.0
           name: telegraf
           envFrom:
             - secretRef:
