@@ -60,7 +60,7 @@ Telegraf is an open source software that gives functionality of processing and a
 ```shell
 $ kubectl create secret generic influxdb-creds \
   --from-literal=INFLUXDB_DB=local_monitoring \
-  --from-literal=INFLUXDB_URL: http://influxdb:8086
+  --from-literal=INFLUXDB_URL=http://influxdb:8086 \
   --from-literal=INFLUXDB_USER=root \
   --from-literal=INFLUXDB_PASSWORD=root1234 \
   -n monitoring
@@ -69,12 +69,6 @@ $ kubectl create secret generic influxdb-creds \
 ```shell
 $ kubectl apply -f telegraf-configmap.yaml
 $ kubectl apply -f telegraf-daemonset.yaml
-```
-
-Expose Telegraf service so that other Pods(containers) in your cluster can access to it.
-
-```shell
-$ kubectl expose deployment telegraf --port=8125 --target-port=8125 --protocol=UDP --type=NodePort -n monitoring
 ```
 
 ## 4. Setup Grafana
@@ -112,13 +106,13 @@ Grafana has been installed with a cloud load balancer in the monitoring namespac
 $ kubectl get service -n monitoring
 kg svc -n monitoring
 NAME                                  TYPE           CLUSTER-IP       EXTERNAL-IP                                                                   PORT(S)          AGE
-grafana                               LoadBalancer   10.100.44.87     ac8c06c2fc2ed4af6a1d41872c7740f6-967746724.ap-northeast-1.elb.amazonaws.com   3000:32225/TCP   38s
-influxdb                              ClusterIP      10.100.181.214   <none>                                                                        8086/TCP         25m
-prometheus-1594090425-alertmanager    ClusterIP      10.100.117.199   <none>                                                                        80/TCP           27s
-prometheus-1594090425-node-exporter   ClusterIP      None             <none>                                                                        9100/TCP         27s
-prometheus-1594090425-pushgateway     ClusterIP      10.100.73.36     <none>                                                                        9091/TCP         27s
-prometheus-1594090425-server          ClusterIP      10.100.244.212   <none>                                                                        80/TCP           27s
-telegraf                              NodePort       10.100.251.177   <none>                                                                        8125:30159/UDP   22m
+grafana                               LoadBalancer   10.100.166.64    af9da45b0450945409ce6fdd27b7a81d-750039418.ap-northeast-1.elb.amazonaws.com   3000:30112/TCP   92m
+influxdb                              ClusterIP      10.100.75.94     <none>                                                                        8086/TCP         93m
+prometheus-1594096167-alertmanager    ClusterIP      10.100.202.223   <none>                                                                        80/TCP           92m
+prometheus-1594096167-node-exporter   ClusterIP      None             <none>                                                                        9100/TCP         92m
+prometheus-1594096167-pushgateway     ClusterIP      10.100.22.162    <none>                                                                        9091/TCP         92m
+prometheus-1594096167-server          ClusterIP      10.100.82.70     <none>                                                                        80/TCP           92m
+telegraf                              NodePort       10.100.255.187   <none>                                                                        8125:32044/UDP   92m
 ```
 
 Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser.

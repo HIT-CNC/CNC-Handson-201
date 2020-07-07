@@ -17,10 +17,10 @@ spec:
         app: influxdb
     spec:
       containers:
-        - envFrom:
-          - secretRef:
-              name: influxdb-creds
       - name: influxdb
+        envFrom:
+        - secretRef:
+            name: influxdb-creds
         image: influxdb
         ports:
         - containerPort: 8083
