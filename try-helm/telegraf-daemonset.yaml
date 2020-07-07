@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: telegraf
+  name: telegraf
+spec:
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf
+          volumeMounts:
+            - mountPath: /etc/telegraf
+              name: telegraf
+      volumes:
+      - name: telegraf
+        configMap:
+          name: telegraf-config
