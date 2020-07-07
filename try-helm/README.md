@@ -52,7 +52,7 @@ Expose InfluxDB service so that other Pods(containers) in your cluster can acces
 $ kubectl expose deployment influxdb --port=8086 --target-port=8086 --protocol=TCP --type=ClusterIP -n monitoring
 ```
 
-## 3. Setup Telegraf as metrics collector.
+## 5. Setup Telegraf as metrics collector.
 
 Telegraf is an open source software that gives functionality of processing and aggregating metrics.
 
@@ -71,7 +71,7 @@ $ kubectl apply -f telegraf-configmap.yaml
 $ kubectl apply -f telegraf-daemonset.yaml
 ```
 
-## 4. Setup Grafana
+## 6. Setup Grafana
 
 Setup the secret.
 
@@ -89,10 +89,12 @@ $ kubectl apply -f grafana-deployment.yaml
 $ kubectl apply -f grafana-service.yaml
 ```
 
+## 7. Install Prometheus with Helm
+
 Now, install Prometheus!
 
 ```shell
-$ helm install stable/prometheus --generate-name --set forceNamespace=monitoring
+$ helm install prometheus stable/prometheus --set forceNamespace=monitoring
 ```
 
 Grafana has been installed with a cloud load balancer in the monitoring namespace. We need the service URL to access to the WebUI.
@@ -113,3 +115,6 @@ telegraf                              NodePort       10.100.255.187   <none>    
 Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser.
 
 **Note that it takes several minutes to provison the AWS LoadBalancer**
+
+## 8. Setup Grafana
+
