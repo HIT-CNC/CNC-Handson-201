@@ -112,3 +112,4 @@ telegraf                              NodePort       10.100.255.187   <none>    
 
 Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser.
 
+**Note that it takes several minutes to provison the AWS LoadBalancer**
