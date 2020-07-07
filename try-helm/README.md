@@ -35,7 +35,8 @@ $ kubectl create secret generic influxdb-creds \
   --from-literal=INFLUXDB_DATABASE=local_monitoring \
   --from-literal=INFLUXDB_USERNAME=root \
   --from-literal=INFLUXDB_PASSWORD=root1234 \
-  --from-literal=INFLUXDB_HOST=influxdb
+  --from-literal=INFLUXDB_HOST=influxdb \
+  -n monitoring
 ```
 
 ```shell
@@ -43,6 +44,7 @@ $ cat <<EOF > influx-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: monitoring
   labels:
     app: influxdb
   name: influxdb-pvc
@@ -132,6 +134,7 @@ $ cat <<EOF > telegraf-secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
+  namespace: monitoring
   name: telegraf-secrets
 type: Opaque
 stringData:
@@ -147,6 +150,7 @@ $ cat <<EOF > telegraf-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: monitoring
   name: telegraf-config
 data:
   telegraf.conf: |+
@@ -227,7 +231,8 @@ Setup the secret.
 ```shell
 $ kubectl create secret generic grafana-creds \
   --from-literal=GF_SECURITY_ADMIN_USER=admin \
-  --from-literal=GF_SECURITY_ADMIN_PASSWORD=admin1234
+  --from-literal=GF_SECURITY_ADMIN_PASSWORD=admin1234 \
+  -n monitoring
 ```
 
 ```shell
@@ -312,3 +317,4 @@ telegraf                              NodePort       10.100.251.177   <none>    
 ```
 
 Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser.
+
