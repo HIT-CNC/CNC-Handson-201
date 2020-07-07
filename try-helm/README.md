@@ -44,12 +44,7 @@ Now, let's apply these YAML files.
 ```shell
 $ kubectl apply -f influxdb-pvc.yaml
 $ kubectl apply -f influxdb-deployment.yaml
-```
-
-Expose InfluxDB service so that other Pods(containers) in your cluster can access to InfluxDB
-
-```shell
-$ kubectl expose deployment influxdb --port=8086 --target-port=8086 --protocol=TCP --type=ClusterIP -n monitoring
+$ kubectl apply -f influxdb-service.yaml
 ```
 
 ## 5. Setup Telegraf as metrics collector.
