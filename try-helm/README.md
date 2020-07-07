@@ -116,3 +116,17 @@ Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your
 
 Access grafana with the loadbalancer FQDN.
 
+Login with grafana admin user and password that you set in grafana-creds secret.
+
+![](img/add-data-source.png)
+
+
+Select `Prometheus` and type `prometheus-server` in URL and then `Save & Test`.
+
+![](img/prometheus.png)
+
+Go back to Data Sources tab and you can see Prometheus has been added as a data source.
+
+![](img/explore.png)
+
+Now, go to `Explorer`, then you can see the types of metrics that Prometheus exports to Grafana.
