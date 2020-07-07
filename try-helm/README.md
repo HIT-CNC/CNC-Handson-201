@@ -86,12 +86,7 @@ Apply Grafana deployment.
 
 ```shell
 $ kubectl apply -f grafana-deployment.yaml
-```
-
-Then, create a LoadBalancer for Grafana.
-
-```shell
-$ kubectl expose deployment grafana --type=LoadBalancer --port=3000 --target-port=3000 --protocol=TCP -n monitoring
+$ kubectl apply -f grafana-service.yaml
 ```
 
 Now, install Prometheus!
