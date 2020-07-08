@@ -23,9 +23,9 @@ The mattermost operator depends on two other operators. They provision DB and Ob
 1. Install MySQL and MinIO operator.
 
 ```shell
-$ kubectl create ns mysql-operator
+$ kubectl apply -f mysql-operator-namespace.yaml
 $ kubectl apply -n mysql-operator -f https://raw.githubusercontent.com/mattermost/mattermost-operator/master/docs/mysql-operator/mysql-operator.yaml
-$ kubectl create ns minio-operator
+$ kubectl apply -f minio-operator-namespace.yaml
 $ kubectl apply -n minio-operator -f https://raw.githubusercontent.com/mattermost/mattermost-operator/master/docs/minio-operator/minio-operator.yaml
 ```
 
@@ -38,7 +38,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/ma
 ### 2-3 Now, install the mattermost operator
 
 ```shell
-$ kubectl create ns mattermost-operator
+$ kubectl apply -f mattermost-operator-namespace.yaml
 $ kubectl apply -n mattermost-operator -f https://raw.githubusercontent.com/mattermost/mattermost-operator/master/docs/mattermost-operator/mattermost-operator.yaml
 ```
 
