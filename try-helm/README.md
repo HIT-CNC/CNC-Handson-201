@@ -28,45 +28,7 @@ Setup helm and the necessary namepsaces
 $ kubectl create namespace monitoring
 ```
 
-## 4. Setup InfluxDB
-
-```shell
-$ kubectl create secret generic influxdb-creds \
-  --from-literal=INFLUXDB_DATABASE=local_monitoring \
-  --from-literal=INFLUXDB_USERNAME=root \
-  --from-literal=INFLUXDB_PASSWORD=root1234 \
-  --from-literal=INFLUXDB_HOST=influxdb \
-  -n monitoring
-```
-
-Now, let's apply these YAML files.
-
-```shell
-$ kubectl apply -f influxdb-pvc.yaml
-$ kubectl apply -f influxdb-deployment.yaml
-$ kubectl apply -f influxdb-service.yaml
-```
-
-## 5. Setup Telegraf as metrics collector.
-
-Telegraf is an open source software that gives functionality of processing and aggregating metrics.
-
-
-```shell
-$ kubectl create secret generic telegraf-creds \
-  --from-literal=INFLUXDB_DB=local_monitoring \
-  --from-literal=INFLUXDB_URL=http://influxdb:8086 \
-  --from-literal=INFLUXDB_USER=root \
-  --from-literal=INFLUXDB_PASSWORD=root1234 \
-  -n monitoring
-```
-
-```shell
-$ kubectl apply -f telegraf-configmap.yaml
-$ kubectl apply -f telegraf-daemonset.yaml
-```
-
-## 6. Setup Grafana
+## 4. Setup Grafana
 
 Setup the secret.
 
@@ -85,12 +47,14 @@ $ kubectl apply -f grafana-deployment.yaml
 $ kubectl apply -f grafana-service.yaml
 ```
 
-## 7. Install Prometheus with Helm
+## 5. Install Prometheus with Helm
 
 Now, install Prometheus!
 
 ```shell
-$ helm install prometheus stable/prometheus --set forceNamespace=monitoring
+$ helm install prometheus stable/prometheus \
+    --namespace monitoring \
+    --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
 ```
 
 Grafana has been installed with a cloud load balancer in the monitoring namespace. We need the service URL to access to the WebUI.
@@ -100,26 +64,23 @@ $ kubectl get service -n monitoring
 kg svc -n monitoring
 NAME                                  TYPE           CLUSTER-IP       EXTERNAL-IP                                                                   PORT(S)          AGE
 grafana                               LoadBalancer   10.100.166.64    af9da45b0450945409ce6fdd27b7a81d-750039418.ap-northeast-1.elb.amazonaws.com   3000:30112/TCP   92m
-influxdb                              ClusterIP      10.100.75.94     <none>                                                                        8086/TCP         93m
 prometheus-1594096167-alertmanager    ClusterIP      10.100.202.223   <none>                                                                        80/TCP           92m
 prometheus-1594096167-node-exporter   ClusterIP      None             <none>                                                                        9100/TCP         92m
 prometheus-1594096167-pushgateway     ClusterIP      10.100.22.162    <none>                                                                        9091/TCP         92m
 prometheus-1594096167-server          ClusterIP      10.100.82.70     <none>                                                                        80/TCP           92m
-telegraf                              NodePort       10.100.255.187   <none>                                                                        8125:32044/UDP   92m
 ```
 
 Grafana server has AWS loadbalancer's alias record.  Now, access to `http://your-external-ip-value` on your browser.
 
 **Note that it takes several minutes to provison the AWS LoadBalancer**
 
-## 8. Setup Grafana
+## 6. Setup Grafana
 
 Access grafana with the loadbalancer FQDN.
 
 Login with grafana admin user and password that you set in grafana-creds secret.
 
 ![](img/add-data-source.png)
-
 
 Select `Prometheus` and type `prometheus-server` in URL and then `Save & Test`.
 
@@ -130,3 +91,16 @@ Go back to Data Sources tab and you can see Prometheus has been added as a data 
 ![](img/explore.png)
 
 Now, go to `Explore`, then you can see the types of metrics that Prometheus exports to Grafana.
+
+## 7. Import Dashboards(Optional)
+
+GrafanaLabs offer a lot of Dashboard presets that displays important metrics for monitoring some types of infra environments.
+
+Ref. https://grafana.com/grafana/dashboards
+
+Let's try some useful dashboard samples that assist you monitoring Kubernetes clusters!
+
+- [Kubernetes cluster monitoring (via Prometheus)](https://grafana.com/grafana/dashboards/315)
+- [Node Exporter Full](https://grafana.com/grafana/dashboards/1860)
+
+To import a dashboard, Click the "+" button then import. Type the ID in a dashboard page then you're all set.
