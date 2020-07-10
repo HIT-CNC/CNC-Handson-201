@@ -1,4 +1,4 @@
-# 201-3 Deploy a multi-tenant configuration on K8s
+# 201-3 Try Helm; the Kubernetes package manage
 
 ## 1. Login to the bastion server
 
