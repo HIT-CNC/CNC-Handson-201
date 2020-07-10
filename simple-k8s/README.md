@@ -1,5 +1,16 @@
 # 201-1 Deploy a simple configuration on K8s
 
+## 0. Labs tips
+
+One of the good practice in K8S is also to know the documentation because you can find some tips to help you. 
+Here the cheatsheet : https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+where you can install the autocomplete cli :
+```
+source <(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.
+echo "source <(kubectl completion bash)" >> ~/.bashrc # add autocomplete permanently to your bash shell.
+```
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
