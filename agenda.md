@@ -20,6 +20,8 @@ Junichi: 30min
 15min
 
 - Accessing to the Lab environment
+  - Register SSH key
+  - SSH to one of the nodes
 - Build, Push and Run your first Container
 
 ---
