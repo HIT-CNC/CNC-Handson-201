@@ -62,6 +62,9 @@ Now you can begin to develop containerized applications. In general, the develop
 In this stage of the tutorial, let's focus on step 1 of this workflow: creating the images that your containers will be based on. Remember, a Docker image captures the private filesystem that your containerized processes will run in; you need to create an image that contains just what your application needs to run.
 
 ### Clone the example project
+
+If `git` is not installed on your host, install it by `sudo yum install git`
+
 You can clone the example project from GitHub:
 
 ```shell
