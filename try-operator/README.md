@@ -83,6 +83,11 @@ spec:
 
 This will create a bunch of Kubernetes resources including MySQL statefulset, MinIO statefulset and mattermost deployment.
 
+You can see the progress of deployment by this operetor here;
+```
+$ watch -c kubectl get all
+```
+
 Note that StatefulSet resource does not handle deletion of Persistent Volumes as they try to keep the persistent storage.
 
 ### 4. Access to your mattermost

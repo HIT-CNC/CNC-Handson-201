@@ -16,6 +16,15 @@ $ sudo apt-get update
 $ sudo apt-get install helm
 ```
 
+Confirm your installation.
+```shell
+$ helm version
+```
+You can see similar output below.
+```
+version.BuildInfo{Version:"v3.2.4", GitCommit:"0ad800ef43d3b826f31a5ad8dfbb4fe05d143688", GitTreeState:"clean", GoVersion:"go1.13.12"}
+```
+
 ## 3. Let's try to install Prometheus and Grafana using Helm chart!
 
 As explained in the hands-on session, Helm is a package manager for Kubernetes. It hides a lot of "unnecessary part" of Kubernetes so that infra operators can easily provison that they need. But you need to be aware that it does not mean you don't have to learn about what you're installing in your kUbernetes.
@@ -49,6 +58,40 @@ $ kubectl apply -f grafana-service.yaml
 
 ## 5. Install Prometheus with Helm
 
+Add helm repository
+```shell
+$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+```
+The output will be shown below.
+```
+"stable" has been added to your repositories
+```
+Make sure `prometheus` helm chart available on the repository;
+```shell
+$ helm search repo stable/prometheus
+```
+You can see similar output below if you have set it up successfully.
+```
+NAME                                    CHART VERSION   APP VERSION     DESCRIPTION
+stable/prometheus                       11.7.0          2.19.0          Prometheus is a monitoring system and time seri...
+stable/prometheus-adapter               2.4.0           v0.6.0          A Helm chart for k8s prometheus adapter
+stable/prometheus-blackbox-exporter     4.1.1           0.16.0          Prometheus Blackbox Exporter
+stable/prometheus-cloudwatch-exporter   0.8.2           0.8.0           A Helm chart for prometheus cloudwatch-exporter
+stable/prometheus-consul-exporter       0.1.4           0.4.0           A Helm chart for the Prometheus Consul Exporter
+stable/prometheus-couchdb-exporter      0.1.1           1.0             A Helm chart to export the metrics from couchdb...
+stable/prometheus-mongodb-exporter      2.6.0           v0.10.0         A Prometheus exporter for MongoDB metrics
+stable/prometheus-mysql-exporter        0.6.0           v0.11.0         A Helm chart for prometheus mysql exporter with...
+stable/prometheus-nats-exporter         2.5.0           0.6.2           A Helm chart for prometheus-nats-exporter
+stable/prometheus-node-exporter         1.11.0          1.0.0           A Helm chart for prometheus node-exporter
+stable/prometheus-operator              8.16.1          0.38.1          Provides easy monitoring definitions for Kubern...
+stable/prometheus-postgres-exporter     1.3.0           0.8.0           A Helm chart for prometheus postgres-exporter
+stable/prometheus-pushgateway           1.4.1           1.2.0           A Helm chart for prometheus pushgateway
+stable/prometheus-rabbitmq-exporter     0.5.5           v0.29.0         Rabbitmq metrics exporter for prometheus
+stable/prometheus-redis-exporter        3.4.1           1.3.4           Prometheus exporter for Redis metrics
+stable/prometheus-snmp-exporter         0.0.5           0.14.0          Prometheus SNMP Exporter
+stable/prometheus-to-sd                 0.3.0           0.5.2           Scrape metrics stored in prometheus format and ...
+```
+
 Now, install Prometheus!
 
 ```shell
@@ -56,6 +99,64 @@ $ helm install prometheus stable/prometheus \
     --namespace monitoring \
     --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
 ```
+Make sure the helm deployment would be successful here;
+```
+$ helm ls -n monitoring
+```
+
+Confirm the `STATUS` column shows `deployed`.
+```
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+prometheus      monitoring      1               2020-07-11 13:36:55.4734704 +0900 JST   deployed        prometheus-11.7.0       2.19.0
+```
+Also you can see all status by executing `kubectl`;
+```shell
+$ kubectl get all -n monitoring
+```
+
+The output shows similar this here;
+* `stable/prometheus` helm chart deployed `grafana` and `prometheus` `deployment`, and create `service` resource automatically.
+
+```
+NAME                                                 READY   STATUS    RESTARTS   AGE
+pod/grafana-5c66bfc695-w2bpt                         1/1     Running   0          11m
+pod/prometheus-alertmanager-66c9754c64-srn6t         2/2     Running   0          4m4s
+pod/prometheus-kube-state-metrics-6df5d44568-rpggk   1/1     Running   0          4m4s
+pod/prometheus-node-exporter-5mhh2                   1/1     Running   0          4m5s
+pod/prometheus-node-exporter-64k92                   1/1     Running   0          4m5s
+pod/prometheus-node-exporter-hgsp8                   1/1     Running   0          4m5s
+pod/prometheus-node-exporter-lr848                   1/1     Running   0          4m5s
+pod/prometheus-node-exporter-pzwfj                   1/1     Running   0          4m5s
+pod/prometheus-node-exporter-zkbmj                   1/1     Running   0          4m5s
+pod/prometheus-pushgateway-84bf7f5876-7bq9w          1/1     Running   0          4m4s
+pod/prometheus-server-6cd89ddd8f-7lcpp               2/2     Running   0          4m4s
+
+NAME                                    TYPE           CLUSTER-IP       EXTERNAL-IP                                                                 PORT(S)        AGE
+service/grafana                         LoadBalancer   172.20.158.21    a7076b55fecef4c73a1cd2d4ecb53080-172290762.eu-central-1.elb.amazonaws.com   80:32061/TCP   11m
+service/prometheus-alertmanager         ClusterIP      172.20.185.20    <none>                                                                      80/TCP         4m5s
+service/prometheus-kube-state-metrics   ClusterIP      172.20.148.48    <none>                                                                      8080/TCP       4m5s
+service/prometheus-node-exporter        ClusterIP      None             <none>                                                                      9100/TCP       4m5s
+service/prometheus-pushgateway          ClusterIP      172.20.90.133    <none>                                                                      9091/TCP       4m5s
+service/prometheus-server               ClusterIP      172.20.195.231   <none>                                                                      80/TCP         4m5s
+
+NAME                                      DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/prometheus-node-exporter   6         6         6       6            6           <none>          4m6s
+
+NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/grafana                         1/1     1            1           11m
+deployment.apps/prometheus-alertmanager         1/1     1            1           4m5s
+deployment.apps/prometheus-kube-state-metrics   1/1     1            1           4m5s
+deployment.apps/prometheus-pushgateway          1/1     1            1           4m5s
+deployment.apps/prometheus-server               1/1     1            1           4m5s
+
+NAME                                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/grafana-5c66bfc695                         1         1         1       11m
+replicaset.apps/prometheus-alertmanager-66c9754c64         1         1         1       4m5s
+replicaset.apps/prometheus-kube-state-metrics-6df5d44568   1         1         1       4m5s
+replicaset.apps/prometheus-pushgateway-84bf7f5876          1         1         1       4m5s
+replicaset.apps/prometheus-server-6cd89ddd8f               1         1         1       4m5s
+```
+
 
 Grafana has been installed with a cloud load balancer in the monitoring namespace. We need the service URL to access to the WebUI.
 
