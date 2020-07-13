@@ -86,7 +86,7 @@ Now that you have some source code and a Dockerfile, it's time to build your fir
 Make sure you're in the directory `node-bulletin-board/bulletin-board-app` in a terminal using the `cd` command. Run the following command to build your bulletin board image:
 
 ```script
-docker build --tag bulletinboard:1.0 .
+docker build --tag bulletinboard:1.0 --network host .
 ```
 
 You'll see Docker step through each instruction in your Dockerfile, building up your image as it goes. If successful, the build process should end with a message `Successfully tagged bulletinboard:1.0`.
@@ -96,7 +96,7 @@ You'll see Docker step through each instruction in your Dockerfile, building up 
 1.  Run the following command to start a container based on your new image:
 
     ```script
-    docker run --publish 8000:8080 --detach --name bb bulletinboard:1.0
+    docker run --publish 8000:8080 --detach --name bb --network host bulletinboard:1.0
     ```
 
     There are a couple of common flags here:
