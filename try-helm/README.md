@@ -1,4 +1,4 @@
-# 201-3 Try Helm; the Kubernetes package manage
+# 201-3 Try Helm; the Kubernetes package manager
 
 ## 1. Login to the bastion server
 
