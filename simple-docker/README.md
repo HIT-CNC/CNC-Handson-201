@@ -96,7 +96,7 @@ You'll see Docker step through each instruction in your Dockerfile, building up 
 1.  Run the following command to start a container based on your new image:
 
     ```script
-    docker run --publish 8000:8080 --detach --name bb --network host bulletinboard:1.0
+    docker run --publish 8000:8080 --detach --name bb --network docker bulletinboard:1.0
     ```
 
     There are a couple of common flags here:
