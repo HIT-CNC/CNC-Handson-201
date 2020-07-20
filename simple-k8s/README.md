@@ -39,7 +39,7 @@ Clone the hands-on repository on your bastion and run `kubectl apply`!
 
 ```
 $ git clone https://github.com/HIT-CNC/CNC-Handson-201.git
-$ cd simple-k8s
+$ cd CNC-Handson-201/simple-k8s
 $ kubectl apply -f app.yaml
 ```
 
