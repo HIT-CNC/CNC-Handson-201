@@ -99,6 +99,8 @@ You'll see Docker step through each instruction in your Dockerfile, building up 
     docker run --publish 8000:8080 --detach --name bb --network docker bulletinboard:1.0
     ```
 
+    `--network` option is not usually necessary, but on this demo environment we use this option due to AWS environmental reason. 
+
     There are a couple of common flags here:
 
     - `--publish` asks Docker to forward traffic incoming on the host's port 8000 to the container's port 8080. Containers have their own private set of ports, so if you want to reach one from the network, you have to forward traffic to it in this way. Otherwise, firewall rules will prevent all network traffic from reaching your container, as a default security posture.
