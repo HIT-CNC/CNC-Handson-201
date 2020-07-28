@@ -63,7 +63,7 @@ In this stage of the tutorial, let's focus on step 1 of this workflow: creating 
 
 ### Clone the example project
 
-If `git` is not installed on your host, install it by `sudo yum install git`
+If `git` is not installed on your host, install it by `sudo yum install -y git`
 
 You can clone the example project from GitHub:
 
