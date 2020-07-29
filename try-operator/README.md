@@ -97,17 +97,9 @@ Note that StatefulSet resource does not handle deletion of Persistent Volumes as
 ```shell
 $ kubectl get ingress
 NAME              HOSTS                            ADDRESS                                                                              PORTS   AGE
-mm-example-full   example.mattermost-example.com   a49d6f15b2d1f4fda867e632dc3e948a-6fb6b18b7c643e20.elb.ap-northeast-1.amazonaws.com   80      7h55m
+mm-example-full   ab47036fd4cb74ef9b8884482ec2ab2d-904289beb63d5ab3.elb.ap-northeast-1.amazonaws.com    a49d6f15b2d1f4fda867e632dc3e948a-6fb6b18b7c643e20.elb.ap-northeast-1.amazonaws.com   80      7h55m
 ```
 
-Now, try to access the URL that is in the `ADDRESS` column, but you will see `404` on Nginx.
-
-It fails because this ingress expects you to access with the hostname ` example.mattermost-example.com`.
-
-To address this, you will have two ways.
-
-2. Use curl with `-H` option `curl a49d6f15b2d1f4fda867e632dc3e948a-6fb6b18b7c643e20.elb.ap-northeast-1.amazonaws.com -H "Host: example.mattermost-example.com"`
-
-3. Use some browser extension to overright the request header like `ModHeader` on Google Chrome.
+2. Use your browser and access to the LoadBalancer FQDN :)
 
 You should be able to see your mattermost chat now!
