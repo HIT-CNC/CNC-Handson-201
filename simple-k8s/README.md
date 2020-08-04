@@ -72,6 +72,22 @@ Note that it can take some time to get the Cloud Load Balancer available.
 
 After covering about CI and CD, we will perform application upgrade with Kubernetes deployment!
 
+```
+$ git diff --no-index --word-diff app.yaml app-update.yaml
+diff --git a/app.yaml b/app-update.yaml
+index 23ea458..c1a6ec0 100644
+--- a/app.yaml
++++ b/app-update.yaml
+@@ -14,7 +14,7 @@ spec:
+    spec:
+      containers:
+      - name: nginx
+        image: [-nginx:1.18.0-alpine-]{+207080326074.dkr.ecr.ap-northeast-1.amazonaws.com/201-demo-app:38d31515521be35b775d07bbed602528764873a8+}
+        ports:
+        - containerPort: 80
+---
+```
+
 If you succeed this section, you will see something like this.
 
 ![](img/nginx-2.png)
