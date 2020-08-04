@@ -18,6 +18,8 @@ In practice, Operators are developed by many third-party vendors such as MinIO, 
 
 [Operator Hub](https://operatorhub.io/) is the central place where you can find many of these operators.
 
+This time, we will try to use mattermost operator to make it easy to install mattermost application; the Slack open source clone.
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
