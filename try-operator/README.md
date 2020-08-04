@@ -1,5 +1,23 @@
 # 201-3 Deploy a Kubernetes Oprator
 
+Kubernetes Operator is getting really important to understand these days. An operator has the following two components.
+
+- Custom Resource Definition
+- Custom Controller
+
+As we learnt before, Kubernetes uses a controller to manage each resource. e.g. Deployment resource is created/update/destroyed by Deployment controller
+
+Custom Resource is one of the Kubernetes extension feature and it enables you to define your own resource definiton.
+
+It is very useful when you want to do something like 
+
+- Simplify middleware deployments that are used in many teams and deployed into your cluster but in the same purpose
+- Simplify your manual operations
+
+In practice, Operators are developed by many third-party vendors such as MinIO, MySQL, Cassandra and more.
+
+[Operator Hub](https://operatorhub.io/) is the central place where you can find many of these operators.
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
