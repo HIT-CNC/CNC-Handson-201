@@ -20,6 +20,15 @@ In practice, Operators are developed by many third-party vendors such as MinIO, 
 
 This time, we will try to use mattermost operator to make it easy to install mattermost application; the Slack open source clone.
 
+## Helm vs Operator
+
+These two can sound similar when you compare them with "simplifying installation" perspective, but they have big difference for the use cases
+
+- Helm is better when you want to install app just one time.
+- Operator is better when you want to performance the process(not necessarily installation/initializing) multiple times.
+
+In short, operators will work for you as your automated operator :)
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
