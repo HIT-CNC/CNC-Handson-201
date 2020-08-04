@@ -1,5 +1,11 @@
 # 201-3 Try Helm; the Kubernetes package manager
 
+We will work through about Helm in this lab. First, we will experience both using Helm and not using it, to deploy a premade application.
+
+First, we will install Grafana which is used to visualize your applications and infrastructure's metrics. You will exectute a few commands to expose your Grafana service.
+
+Then, we will now use Helm to install Prometheus which is one of the most popular and major open source monitoring tool. You can experience the difference by doing these two different installation practice.
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
