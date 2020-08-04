@@ -74,7 +74,7 @@ After covering about CI and CD, we will perform application upgrade with Kuberne
 
 If you succeed this section, you will see something like this.
 
-![](img/nginx2.png)
+![](img/nginx-2.png)
 
 ## 6. Delete all resources
 
