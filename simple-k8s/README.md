@@ -72,6 +72,10 @@ Note that it can take some time to get the Cloud Load Balancer available.
 
 After covering about CI and CD, we will perform application upgrade with Kubernetes deployment!
 
+If you succeed this section, you will see something like this.
+
+![](img/nginx2.png)
+
 ## 6. Delete all resources
 
 Once you confirm your application is wokring, let's delete all the resources you've created on your cluster.
