@@ -2,7 +2,7 @@
 
 ## 0. Labs tips
 
-One of the good practice in K8S is also to know the documentation because you can find some tips to help you. 
+One of the good practice in K8S is also to know the documentation because you can find some tips to help you.
 Here the cheatsheet : https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 where you can install the autocomplete cli :
@@ -68,12 +68,18 @@ Note that it can take some time to get the Cloud Load Balancer available.
 
 ![](img/nginx.png)
 
+## 5. Additional follow-up content: Update Kubernetes deployment(your application)
+
+After covering about CI and CD, we will perform application upgrade with Kubernetes deployment!
+
+## 6. Delete all resources
+
 Once you confirm your application is wokring, let's delete all the resources you've created on your cluster.
 
 Run the following command.
 
 ```
-$ kubectl delete -f app.yaml
+$ kubectl delete -f app-update.yaml
 
 or
 
