@@ -6,6 +6,15 @@ First, we will install Grafana which is used to visualize your applications and 
 
 Then, we will now use Helm to install Prometheus which is one of the most popular and major open source monitoring tool. You can experience the difference by doing these two different installation practice.
 
+Helm has two main features:
+
+- Chart
+  - It's a package management system. You can find public [Helm chart list](https://github.com/helm/charts).
+  - Mostly used to take advantages of simplifying an application running on Kubernetes with Helm. 
+- Template
+  - Helm is a template engine. You can use it to make your application definiton DRY.
+  - They have variable feature. So you can use it to define different values but in the same core definiton. e.g. It's useful when you want to just change environment variables and image repository information on Dev, Staging, Prod environment.
+
 ## 1. Login to the bastion server
 
 Using your terminal emulator such as WSL, putty or ConEmu, login to the server.
