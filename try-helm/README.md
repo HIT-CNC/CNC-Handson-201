@@ -73,7 +73,7 @@ $ kubectl apply -f grafana-service.yaml
 
 Add helm repository
 ```shell
-$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
 The output will be shown below.
 ```
@@ -81,39 +81,40 @@ The output will be shown below.
 ```
 Make sure `prometheus` helm chart available on the repository;
 ```shell
-$ helm search repo stable/prometheus
+$ helm search repo prometheus-community
 ```
 You can see similar output below if you have set it up successfully.
 ```
-NAME                                    CHART VERSION   APP VERSION     DESCRIPTION
-stable/prometheus                       11.7.0          2.19.0          Prometheus is a monitoring system and time seri...
-stable/prometheus-adapter               2.4.0           v0.6.0          A Helm chart for k8s prometheus adapter
-stable/prometheus-blackbox-exporter     4.1.1           0.16.0          Prometheus Blackbox Exporter
-stable/prometheus-cloudwatch-exporter   0.8.2           0.8.0           A Helm chart for prometheus cloudwatch-exporter
-stable/prometheus-consul-exporter       0.1.4           0.4.0           A Helm chart for the Prometheus Consul Exporter
-stable/prometheus-couchdb-exporter      0.1.1           1.0             A Helm chart to export the metrics from couchdb...
-stable/prometheus-mongodb-exporter      2.6.0           v0.10.0         A Prometheus exporter for MongoDB metrics
-stable/prometheus-mysql-exporter        0.6.0           v0.11.0         A Helm chart for prometheus mysql exporter with...
-stable/prometheus-nats-exporter         2.5.0           0.6.2           A Helm chart for prometheus-nats-exporter
-stable/prometheus-node-exporter         1.11.0          1.0.0           A Helm chart for prometheus node-exporter
-stable/prometheus-operator              8.16.1          0.38.1          Provides easy monitoring definitions for Kubern...
-stable/prometheus-postgres-exporter     1.3.0           0.8.0           A Helm chart for prometheus postgres-exporter
-stable/prometheus-pushgateway           1.4.1           1.2.0           A Helm chart for prometheus pushgateway
-stable/prometheus-rabbitmq-exporter     0.5.5           v0.29.0         Rabbitmq metrics exporter for prometheus
-stable/prometheus-redis-exporter        3.4.1           1.3.4           Prometheus exporter for Redis metrics
-stable/prometheus-snmp-exporter         0.0.5           0.14.0          Prometheus SNMP Exporter
-stable/prometheus-to-sd                 0.3.0           0.5.2           Scrape metrics stored in prometheus format and ...
+NAME                                                    CHART VERSION   APP VERSION     DESCRIPTION
+prometheus-community/kube-prometheus-stack              9.4.3           0.38.1          kube-prometheus-stack collects Kubernetes manif...
+prometheus-community/prometheus                         11.15.0         2.20.1          Prometheus is a monitoring system and time seri...
+prometheus-community/prometheus-adapter                 2.5.2           v0.7.0          A Helm chart for k8s prometheus adapter
+prometheus-community/prometheus-blackbox-exporter       4.5.2           0.17.0          Prometheus Blackbox Exporter
+prometheus-community/prometheus-cloudwatch-expo...      0.9.0           0.8.0           A Helm chart for prometheus cloudwatch-exporter
+prometheus-community/prometheus-consul-exporter         0.1.7           0.4.0           A Helm chart for the Prometheus Consul Exporter
+prometheus-community/prometheus-couchdb-exporter        0.1.2           1.0             A Helm chart to export the metrics from couchdb...
+prometheus-community/prometheus-mongodb-exporter        2.8.1           v0.10.0         A Prometheus exporter for MongoDB metrics
+prometheus-community/prometheus-mysql-exporter          0.7.1           v0.11.0         A Helm chart for prometheus mysql exporter with...
+prometheus-community/prometheus-nats-exporter           2.5.1           0.6.2           A Helm chart for prometheus-nats-exporter
+prometheus-community/prometheus-node-exporter           1.11.2          1.0.1           A Helm chart for prometheus node-exporter
+prometheus-community/prometheus-operator                9.3.2           0.38.1          DEPRECATED - This chart will be renamed. See ht...
+prometheus-community/prometheus-postgres-exporter       1.3.3           0.8.0           A Helm chart for prometheus postgres-exporter
+prometheus-community/prometheus-pushgateway             1.4.2           1.2.0           A Helm chart for prometheus pushgateway
+prometheus-community/prometheus-rabbitmq-exporter       0.5.6           v0.29.0         Rabbitmq metrics exporter for prometheus
+prometheus-community/prometheus-redis-exporter          3.6.0           1.11.1          Prometheus exporter for Redis metrics
+prometheus-community/prometheus-snmp-exporter           0.0.6           0.14.0          Prometheus SNMP Exporter
+prometheus-community/prometheus-to-sd                   0.3.1           0.5.2           Scrape metrics stored in prometheus format and ...
 ```
 
 Now, install Prometheus!
 
 ```shell
-$ helm install prometheus stable/prometheus \
+$ helm install prometheus prometheus-community/prometheus \
     --namespace monitoring \
     --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
 
 NAME: prometheus
-LAST DEPLOYED: Tue Jul 14 17:03:23 2020
+LAST DEPLOYED: Fri Sep 18 23:12:58 2020
 NAMESPACE: monitoring
 STATUS: deployed
 REVISION: 1
@@ -162,7 +163,7 @@ $ helm ls -n monitoring
 Confirm the `STATUS` column shows `deployed`.
 ```
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-prometheus      monitoring      1               2020-07-11 13:36:55.4734704 +0900 JST   deployed        prometheus-11.7.0       2.19.0
+prometheus      monitoring      1               2020-09-18 23:12:58.9040239 +0900 JST   deployed        prometheus-11.15.0      2.20.1
 ```
 Also you can see all status by executing `kubectl`;
 ```shell
