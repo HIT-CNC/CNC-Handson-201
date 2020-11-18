@@ -52,6 +52,7 @@ The mattermost operator depends on two other operators. They provision DB and Ob
 1. Install MySQL and MinIO operator.
 
 ```shell
+$ CNC-Handson-201/try-operator/
 $ kubectl apply -f mysql-operator-namespace.yaml
 $ kubectl apply -n mysql-operator -f https://raw.githubusercontent.com/mattermost/mattermost-operator/master/docs/mysql-operator/mysql-operator.yaml
 $ kubectl apply -f minio-operator-namespace.yaml
