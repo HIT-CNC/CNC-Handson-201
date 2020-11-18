@@ -47,6 +47,7 @@ Now, let's try a quick installation with Helm! This time we will install Prometh
 Setup helm and the necessary namepsaces
 
 ```shell
+$ cd CNC-Handson-201/try-helm/
 $ kubectl apply -f monitoring-namespace.yaml
 ```
 
